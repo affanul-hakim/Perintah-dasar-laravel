@@ -2,6 +2,7 @@
 
 # Model 	
 php artisan make:model Flight  --migration (membuat model dan migrasi)
+php artisan help make:model
 
 # Migration 
 php artisan make:migration create_flights_table	 (membuat migrasi)
