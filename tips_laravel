@@ -1,5 +1,5 @@
 # Tips Urutan Pembuatan MVC pada Laravel :
-php artisan help (migrate:status) memerihsa bantuan
+php artisan help (migrate:status) bantuan 
 
 
 # Model 	
@@ -13,7 +13,10 @@ php artisan migrate:rollback (mengembalikan migrasi satu tingkat)
 php artisan migrate:fresh (menghapus migrate dan menjalankan kembali file migrate)
 
 # Controller 
-php artisan make:controller PhotoController --resource (membuat controller dan resource root)
+php artisan make:controller PhotoController (membuat controller dan resource)
+php artisan make:controller -r MotorController (membuat controller dan resource controler)
+
+
 
 # Seeder
 php artisan make:seeder UserSeeder   (membuat seeder)
