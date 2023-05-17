@@ -50,14 +50,12 @@ $user->first()
 $user->find(1)
 $user->findOrfail(10) (dengan pesan kesalahan)
 
-
-
-
-
-
-
-
-
-
-
-
+# Paginate 
+ untuk mengaktifkan link paginate tambahkan  (laravel 9)
+Use bootstrap
+App\Providers\AppServiceProvider
+public function boot()
+{
+    Paginator::useBootstrapFive();
+ 
+} 
