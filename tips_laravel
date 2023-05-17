@@ -3,7 +3,7 @@ php artisan help (migrate:status) memerihsa bantuan
 
 
 # Model 	
-php artisan make:model Flight  --migration (membuat model dan migrasi)
+php artisan make:model -m Flight  (membuat model dan migrasi)
 
 # Migration 
 php artisan make:migration create_flights_table	 (membuat migrasi)
