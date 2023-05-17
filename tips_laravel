@@ -19,5 +19,28 @@ php artisan db:seed  (menjalankan seeder)
 View Blade Enggine
 
 # Tinker
+php artisan tinker
+$user = new App\Models\User;
+$user = new User;
+$user->name = 'Affanul hakim'
+$user->email = 'affanul@gmail.com'
+$user->password = bcrypt('coba)
+$user->save()
+
+- Menampilkan data di tinker
+$user->all()
+$user->first()
+$user->find(1)
+$user->findOrfail(10) (dengan pesan kesalahan)
+
+
+
+
+
+
+
+
+
+
 
 
