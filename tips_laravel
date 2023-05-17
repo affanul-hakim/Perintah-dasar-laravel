@@ -1,0 +1,12 @@
+# Urutan Laravel :
+
+Model 	: php artisan make:model Flight  --migration
+
+Migration 	: php artisan make:migration create_flights_table	
+php artisan migrate, php artisan migrate:status, php artisan migrate:rollback
+
+Controller 	: php artisan make:controller PhotoController --resource
+
+Seeder	: php artisan make:seeder UserSeeder  | php artisan db:seed
+
+View Blade Enggine
