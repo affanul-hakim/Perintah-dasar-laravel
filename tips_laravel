@@ -6,10 +6,11 @@ php artisan help (migrate:status) memerihsa bantuan
 php artisan make:model -m Flight  (membuat model dan migrasi)
 
 # Migration 
-php artisan make:migration create_flights_table	 (membuat migrasi)
+php artisan make:migration create_flights_table	 (membuat file migrasi baru)
 php artisan migrate (menjalankan migrasi)
 php artisan migrate:status (status migrasi)
 php artisan migrate:rollback (mengembalikan migrasi satu tingkat)
+php artisan migrate:fresh (menghapus migrate dan menjalankan kembali file migrate)
 
 # Controller 
 php artisan make:controller PhotoController --resource (membuat controller dan resource root)
