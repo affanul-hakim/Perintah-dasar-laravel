@@ -19,6 +19,17 @@ php artisan make:controller PhotoController --resource (membuat controller dan r
 php artisan make:seeder UserSeeder   (membuat seeder)
 php artisan db:seed  (menjalankan seeder)
 
+Contoh :
+  Motor::create([
+            'nama_motor' => 'Honda Beat',
+            'merek_id' => 1,
+            'warna' => 'Hitam',
+            'harga' => 1000000,
+            'image' => 'default.jpg'
+        ]);
+
+
+
 View Blade Enggine
 
 # Tinker
