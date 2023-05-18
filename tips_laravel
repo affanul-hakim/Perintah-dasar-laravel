@@ -117,4 +117,35 @@ class Post extends Model
 - Menampilkan berdasar kategori
  -  {{ $post->category->nama }}
 
+# Problem N + 1
+Install Library : https://github.com/itsgoingd/clockwork
+Install extention chome : clockwork
+
+Untuk melihat di browser chorme, klik kanan di halaman + inspect + clockwork
+
+# Dokumentasi Larevel 
+# Eager Loading
+
+- Tambahkan fungsi with untuk mengatasi N+1 problem
+- masukan nama tabel relasi kedalam fungsi with
+
+$books = Book::with('author')->get();
+
+foreach ($books as $book) {
+    echo $book->author->name;
+}
+
+# Lazy Eager Loading, tambahkan fungsi load dengan nama tabel relasi
+
+$books = Book::all();
+ 
+if ($someCondition) {
+    $books->load('author', 'publisher');
+}
+
+
+
+
+
+
 
