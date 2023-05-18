@@ -87,3 +87,34 @@ public function boot()
     Paginator::useBootstrapFive();
  
 } 
+
+# Relationship
+
+- one to one  
+class Post extends Model
+{
+    /**
+     * Get the category that owns the post.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+}
+ 
+ - one to many
+ class Post extends Model
+{
+    /**
+     * Get the comments for the blog post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+}
+
+- Menampilkan berdasar kategori
+ -  {{ $post->category->nama }}
+
+
