@@ -33,9 +33,6 @@ Contoh :
 
 # Factory
 
-# Faker Doc
-https://fakerphp.github.io/
-
 - php artisan make:factory MotorFactory (membuat factory)
 
 - Seting Lokasi Faker Locale Indonesia :
@@ -48,9 +45,9 @@ Tambahkan kode berikut
 FAKER_LOCALE=id_ID
 
 3. Masukan jumlah data Factory ke DatabaseSeeder
- Motor::factory(20)->create();
+ Motor::factory(20)->create(); / menambahkan 20 data motor random
 
-4. Masukan data Random yang akan dibuat di MotorFactory
+4. Masukan database property Motor yang akan dibuat di MotorFactory
     
     return [
             'nama_motor' => $this->faker->sentence(2),
@@ -60,6 +57,9 @@ FAKER_LOCALE=id_ID
             'image' => $this->faker->image(null, 640, 480)
         ];
         
+# Faker Doc (dokumentasi Faker)
+https://fakerphp.github.io/
+
 
 View Blade Enggine
 
