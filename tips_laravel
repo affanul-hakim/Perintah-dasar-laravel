@@ -31,7 +31,35 @@ Contoh :
             'image' => 'default.jpg'
         ]);
 
+# Factory
 
+# Faker Doc
+https://fakerphp.github.io/
+
+- php artisan make:factory MotorFactory (membuat factory)
+
+- Seting Lokasi Faker Locale Indonesia :
+
+1. App/config/app.php
+Tambahkan kode berikut
+- Faker_locale => env('FAKER_LOCALE', 'en_US')
+
+2. Tambahkan kode berikut di .env
+FAKER_LOCALE=id_ID
+
+3. Masukan jumlah data Factory ke DatabaseSeeder
+ Motor::factory(20)->create();
+
+4. Masukan data Random yang akan dibuat di MotorFactory
+    
+    return [
+            'nama_motor' => $this->faker->sentence(mt_rand(1, 2)),
+            'merek_id' => $this->faker->mt_rand(1, 3),
+            'warna' => $this->faker->colorName(),
+            'harga' => $this->faker->randomNumber(),
+            'image' => $this->faker->image(null, 640, 480)
+        ];
+        
 
 View Blade Enggine
 
