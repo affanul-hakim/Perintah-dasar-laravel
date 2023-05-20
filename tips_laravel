@@ -133,7 +133,7 @@ foreach ($books as $book) {
     echo $book->author->name;
 }
 
-- Contoh 2, menambah nama kategori didalam fungsi (with) disini menambah kategori merek karena Controller motor memili relasi dengan kategori merek
+- Contoh 2, menambah nama kategori didalam fungsi (with) disini menambah kategori merek karena Controller motor memili relasi dengan kategori merek : Motor::with(['merek'])
 
 class MotorController extends Controller
 {
@@ -146,7 +146,7 @@ class MotorController extends Controller
 }
 
 
-# Lazy Eager Loading, tambahkan fungsi load dengan nama tabel relasi
+# Lazy Eager Loading, tambahkan fungsi load dengan nama tabel relasi :  $books->load('author', 'publisher')
 
 $books = Book::all();
  
