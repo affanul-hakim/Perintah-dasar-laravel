@@ -126,11 +126,25 @@ Untuk melihat di browser chorme, klik kanan di halaman + inspect + clockwork
 - Tambahkan fungsi with untuk mengatasi N+1 problem
 - masukan nama tabel relasi kedalam fungsi with
 
+- Contoh 1
 $books = Book::with('author')->get();
 
 foreach ($books as $book) {
     echo $book->author->name;
 }
+
+- Contoh 2, menambah nama kategori didalam fungsi (with) disini menambah kategori merek karena Controller motor memili relasi dengan kategori merek
+
+class MotorController extends Controller
+{
+ public function index()
+    {
+        return view('motor.index', [
+            'motor' => Motor::with(['merek'])->orderByDesc('id')->filter(request(['search']))->paginate(10)
+        ]);
+    }
+}
+
 
 # Lazy Eager Loading, tambahkan fungsi load dengan nama tabel relasi
 
