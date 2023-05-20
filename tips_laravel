@@ -60,9 +60,6 @@ FAKER_LOCALE=id_ID
 # Faker Doc (dokumentasi Faker)
 https://fakerphp.github.io/
 
-
-View Blade Enggine
-
 # Tinker
 php artisan tinker
 $user = new App\Models\User;
@@ -144,6 +141,10 @@ if ($someCondition) {
 }
 
 
+# View Blade 
+- Navbar
+Operator ternari, apabila variabel title berisi home maka tampilkan active pada navbar :
+{{ ($title === "home") ? 'active' : '' }} 
 
 
 
