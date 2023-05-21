@@ -163,16 +163,18 @@ Operator ternari, apabila variabel title berisi home maka tampilkan active pada 
 # Flash data, key Flash Data
 
 - Membuat redirect halaman login, sekaligus menampilkan flash data
+
 return redirect('/login_wpu')->with('success_message', 'Registration successfull! Pleace login');
 
 - menampilkan flash data dengan bootstrap
+
    @if (session()->has('success_message'))        
       <div class="alert alert-success">
            {{ session('success_message) }}
       </div>
     @endif
 
-# Validasi Data : key Validation
+# Validasi Data : key Validation, pada form user registrasi
 
       $validatedData =  $request->validate([
             'name' => 'required|max:255',
@@ -187,22 +189,45 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
   // Sukses validasi input data ke Database
   User::create($validatedData);
   
-# Autentification, key Authentication
+# Autentification, Contoh Form Login, key Authentication
 
-Secara default midleware otomatis berjalan dalam laravel, seting midleware berada dalam folder : App/Http/Kernel
+- Contoh Fungsi Autentikasi Input Login User :
 
-Midleware
+   public function autenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email:dns',
+            'password' => 'required'
+        ]);
+        // Jika user lolos autentikasi, benar email & password redirect ke Dashboard
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/dashboard');
+        }
+        // jika user tidak lolos autentikasi, redirect ke login dengan pesan login error
+        return back()->with('loginError', 'Login failed');
+    }
+    
+# Midleware
+- Secara default midelware otomatis berjalan dalam laravel, seting midelware berada dalam folder : App/Http/Kernel
+
 - user yang sudah autentifikasi dengan fungsi : Auth
 - user yang belum autentikasi : guest
 
 Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
- Rubah redirect ke halaman yang diinginkan :
+ Rubah redirect ke halaman yang diinginkan apabila user berhasil login/autentikasi benar :
  
  public const HOME = '/posts';
 
+- Contoh Tag Menampilkan data auth :
+  @auth
+      tampilkan apabila user login/autentikasi
+  @else
+      tampilkan apabila user belum login/autentikasi
+  @endauth
 
+- Apabila mengakses halaman/route yang bisa hanya user yang sudah login maka default midleware akan mengarahkan ke halaman (login) App\Http\Middleware\Autenticate  Tidak ada Route (Login) halaman tidak bisa diakses/dibatasi login maka dibuatkan name route  : name('login')
 
-
-
+Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
 
