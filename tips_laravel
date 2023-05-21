@@ -187,6 +187,22 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
   // Sukses validasi input data ke Database
   User::create($validatedData);
   
-  
+# Autentification, key Authentication
+
+Secara default midleware otomatis berjalan dalam laravel, seting midleware berada dalam folder : App/Http/Kernel
+
+Midleware
+- user yang sudah autentifikasi dengan fungsi : Auth
+- user yang belum autentikasi : guest
+
+Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
+ Rubah redirect ke halaman yang diinginkan :
+ 
+ public const HOME = '/posts';
+
+
+
+
+
 
 
