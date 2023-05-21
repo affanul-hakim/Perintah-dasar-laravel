@@ -226,7 +226,7 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
       tampilkan apabila user belum login/autentikasi
   @endauth
 
-- Apabila mengakses halaman/route yang bisa hanya user yang sudah login maka default midleware akan mengarahkan ke halaman (login) App\Http\Middleware\Autenticate  Tidak ada Route (Login) halaman tidak bisa diakses/dibatasi login maka dibuatkan name route  : name('login')
+- Apabila mengakses halaman/route user yang belum login maka default midleware akan mengarahkan ke halaman (login) App\Http\Middleware\Autenticate  Tidak ada Route (Login) halaman tidak bisa diakses/dibatasi login maka dibuatkan name route  : name('login')
 
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
