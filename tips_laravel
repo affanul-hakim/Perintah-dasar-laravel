@@ -258,13 +258,21 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
  
     public function handle(Request $request, Closure $next)
     {
+        // Cara pertama
         if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
+            abort(403);
+        }
+        return $next($request);
+        
+        // Cara Kedua    
+        // Jika belum login & bukan admin maka tidak bisa akses
+        if (auth()->guest() || !auth()->user()->is_admin) {
             abort(403);
         }
         return $next($request);
     }
     
-3. Daftarkan di Kernel App\Http\Kernel.
+3. Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
  'is_admin' => \App\Http\Middleware\IsAdmin::class
  
 4. Tambahkan Middleware is_admin di route kategori merek
@@ -273,8 +281,18 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
 # Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
 Buat gate tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
 
+  - Hanya email : sandika@gmail.com yang bisa mengakses kategori
   Gate::define('admin', function (User $user) {
        return $user->email === 'sandika@gmail.com';
+  });
+  
+  - Buat Migrasi Tambahkan kolom is_admin pada tabel users default false 
+    $table->boolean('is_admin')->default(false);
+    $table->dropColumn('is_admin');
+    
+    - Ubah Gate menjadi :
+    Gate::define('admin', function (User $user) {
+       return $user->is_admin;
   });
 
 - Masukan Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
