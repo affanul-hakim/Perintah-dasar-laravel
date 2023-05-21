@@ -243,11 +243,10 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
 # Authirzation, otorisasi akun admin dan akun user biasa
-- Tambahk pada controller
+- Tambahkan pada controller kategori admin
   if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
         abort(403);
-   }
-   
+   }   
    
 1. Buat Midlleware Sendiri
 php artisan make:midlleware IsAdmin, atau command palete vscode
@@ -271,9 +270,17 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
 4. Tambahkan Middleware is_admin di route kategori merek
 Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
 
+# Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
+Buat gate tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
 
+  Gate::define('admin', function (User $user) {
+       return $user->email === 'sandika@gmail.com';
+  });
 
-
+- Masukan Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
+    @can('admin')
+    Link  halaman kategori admin
+    @endcan
 
 
 
