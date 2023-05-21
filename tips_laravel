@@ -174,7 +174,7 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
       </div>
     @endif
 
-# Validasi Data : key Validation, pada form user registrasi
+# Validasi Data : key Validation, pada form registrasi user
 
       $validatedData =  $request->validate([
             'name' => 'required|max:255',
@@ -189,6 +189,18 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
   // Sukses validasi input data ke Database
   User::create($validatedData);
   
+ # Notifikasi pada form input
+ Agar user tidak perlu mengetik lagi input pada form maka masukan fungsi old data pada : value="{{ old('name') }}
+ 
+<input type="text" name="name" class="form-control rounded-top @error('name') is-invalid @enderror" id="name" placeholder="name" value="{{ old('name') }}">
+<label for="name">Name</label>
+ @error('name')
+      <div class="invalid-feedback">
+              {{ $message }}
+      </div>
+ @enderror
+            
+ 
 # Autentification, Contoh Form Login, key Authentication
 
 - Contoh Fungsi Autentikasi Input Login User :
@@ -229,5 +241,39 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
 - Apabila mengakses halaman/route user yang belum login maka default midleware akan mengarahkan ke halaman (login) App\Http\Middleware\Autenticate  Tidak ada Route (Login) halaman tidak bisa diakses/dibatasi login maka dibuatkan name route  : name('login')
 
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
+
+# Authirzation, otorisasi akun admin dan akun user biasa
+- Tambahk pada controller
+  if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
+        abort(403);
+   }
+   
+   
+1. Buat Midlleware Sendiri
+php artisan make:midlleware IsAdmin, atau command palete vscode
+
+2. masukan kode pada middleware IsAdmin yang baru dibuat tadi
+
+ // Otentikasi User Autorization
+ // Jika user belum login atau User selain sandika tidak bisa akses kategori merek motor, buat midlleware baru, dan pindahkan pindah ke middleware script dibawah ini
+ 
+    public function handle(Request $request, Closure $next)
+    {
+        if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
+            abort(403);
+        }
+        return $next($request);
+    }
+    
+3. Daftarkan di Kernel App\Http\Kernel.
+ 'is_admin' => \App\Http\Middleware\IsAdmin::class
+ 
+4. Tambahkan Middleware is_admin di route kategori merek
+Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
+
+
+
+
+
 
 
