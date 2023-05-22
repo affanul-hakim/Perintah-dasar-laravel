@@ -281,19 +281,22 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
 # Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
 Buat gate tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
 
-  - Hanya email : sandika@gmail.com yang bisa mengakses kategori
+  - Hanya email : sandika@gmail.com yang bisa mengakses kategori contoh 1 :
+  
   Gate::define('admin', function (User $user) {
        return $user->email === 'sandika@gmail.com';
   });
   
   - Buat Migrasi Tambahkan kolom is_admin pada tabel users default false 
+    
     $table->boolean('is_admin')->default(false);
     $table->dropColumn('is_admin');
     
-    - Ubah Gate menjadi :
-    Gate::define('admin', function (User $user) {
-       return $user->is_admin;
-  });
+    - Ubah Gate menjadi contoh 2 :
+      
+      Gate::define('admin', function (User $user) {
+           return $user->is_admin;
+      });
 
 - Masukan Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
     @can('admin')
