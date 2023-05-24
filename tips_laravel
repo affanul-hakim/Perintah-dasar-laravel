@@ -242,7 +242,7 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
 
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
-# Authirzation, otorisasi akun admin dan akun user biasa
+# Authirzation, Otorisasi akun admin dan akun user biasa
 - Tambahkan pada controller kategori admin
   if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
         abort(403);
@@ -265,34 +265,35 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
         return $next($request);
         
         // Cara Kedua    
-        // Jika belum login & bukan admin maka tidak bisa akses
+        // Jika user belum login & bukan admin maka tidak bisa akses kontroler middleware is_admin
         if (auth()->guest() || !auth()->user()->is_admin) {
             abort(403);
         }
         return $next($request);
     }
     
-3. Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
+# Cara yang dianjurkan Membuat Autorization :
+
+3. Buat Middleware baru, Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
  'is_admin' => \App\Http\Middleware\IsAdmin::class
  
 4. Tambahkan Middleware is_admin di route kategori merek
 Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
 
 # Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
-Buat gate tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
-
-  - Hanya email : sandika@gmail.com yang bisa mengakses kategori contoh 1 :
+1. Buat gate baru tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
+  1 Hanya email : sandika@gmail.com yang bisa mengakses kategori contoh pertama :
   
   Gate::define('admin', function (User $user) {
        return $user->email === 'sandika@gmail.com';
   });
   
-  - Buat Migrasi Tambahkan kolom is_admin pada tabel users default false 
+- Buat Migrasi Tambahkan kolom is_admin pada tabel users default false apabila belum ada kolom is_admin pada tabel user. 
     
     $table->boolean('is_admin')->default(false);
     $table->dropColumn('is_admin');
     
-    - Ubah Gate menjadi contoh 2 :
+2 Ubah koding Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
       
       Gate::define('admin', function (User $user) {
            return $user->is_admin;
@@ -300,7 +301,7 @@ Buat gate tambahkan skrip berikut di file App\Providers\AppServiceProvider.php d
 
 - Masukan Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
     @can('admin')
-    Link  halaman kategori admin
+        Link  halaman kategori admin
     @endcan
 
 
