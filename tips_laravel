@@ -304,5 +304,49 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
         Link  halaman kategori admin
     @endcan
 
+# Slug eloquent-sluggable ; Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
+
+Tambah Route :
+// Request slug berita
+Route::get('/dashboard/berita/checkSlug', [BeritaController::class, 'checkSlug'])->middleware('auth');
+
+- Controller Post
+use \Cviebrock\EloquentSluggable\Services\SlugService;
+
+   public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Berita::class, 'slug', $request->judul);
+        return response()->json(['slug' => $slug]);
+    }
+
+- Model Post:
+use Cviebrock\EloquentSluggable\Sluggable;
+
+use Sluggable;
+    
+ public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'judul'
+            ]
+        ];
+    }
+
+- View Create Post
+// menggunakan library eloquent-sluggable
+const judul = document.querySelector('#judul');
+const slug = document.querySelector('#slug');
 
 
+judul.addEventListener('change', function()  {
+fetch('/dashboard/berita/checkSlug?judul=' + judul.value)
+.then(response => response.json())
+.then(data => slug.value = data.slug)
+
+});
