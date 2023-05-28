@@ -16,6 +16,9 @@ php artisan migrate:fresh (menghapus migrate dan menjalankan kembali file migrat
 php artisan make:controller PhotoController (membuat controller dan resource)
 php artisan make:controller -r MotorController (membuat controller dan resource controler)
 
+- Membuat  Controller yang terhubung dengan model (Spesifik resource model)
+php artisan make:controller PhotoController --model=Photo --resource
+
 
 
 # Seeder
