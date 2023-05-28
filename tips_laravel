@@ -308,7 +308,7 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
 Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
-// Request slug berita
+// Route, Request slug berita
 Route::get('/dashboard/berita/checkSlug', [BeritaController::class, 'checkSlug'])->middleware('auth');
 
 - Controller Post, tambahkan use 
@@ -320,8 +320,8 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
         return response()->json(['slug' => $slug]);
     }
 
-- Model Post:
-- tambahkan user
+- Model Post tambahkan use
+
 use Cviebrock\EloquentSluggable\Sluggable;
 
 use Sluggable;
@@ -340,7 +340,7 @@ use Sluggable;
         ];
     }
 
-- View Create Post, Script Javascript untuk membuat slug di form post
+- Form View Create Post, Javascript untuk membuat slug di form post
 // menggunakan library eloquent-sluggable
 const judul = document.querySelector('#judul');
 const slug = document.querySelector('#slug');
