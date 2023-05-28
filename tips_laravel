@@ -340,11 +340,10 @@ use Sluggable;
         ];
     }
 
-- Form View Create Post, Javascript untuk membuat slug di form post
+- Form View Create Post, Javascript untuk membuat slug di form post, dengan nama id field judul dan slug, dengan koding javascript sebagai berikut :
 // menggunakan library eloquent-sluggable
 const judul = document.querySelector('#judul');
 const slug = document.querySelector('#slug');
-
 
 judul.addEventListener('change', function()  {
 fetch('/dashboard/berita/checkSlug?judul=' + judul.value)
