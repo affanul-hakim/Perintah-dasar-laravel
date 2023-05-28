@@ -304,13 +304,14 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
         Link  halaman kategori admin
     @endcan
 
-# Slug eloquent-sluggable ; Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
+# Cara Membuat Slug di Laravel dengan library Slug eloquent-sluggable, 
+- Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
-Tambah Route :
+Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
 // Request slug berita
 Route::get('/dashboard/berita/checkSlug', [BeritaController::class, 'checkSlug'])->middleware('auth');
 
-- Controller Post
+- Controller Post, tambahkan use 
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
    public function checkSlug(Request $request)
@@ -320,6 +321,7 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
     }
 
 - Model Post:
+- tambahkan user
 use Cviebrock\EloquentSluggable\Sluggable;
 
 use Sluggable;
@@ -338,7 +340,7 @@ use Sluggable;
         ];
     }
 
-- View Create Post
+- View Create Post, Script Javascript untuk membuat slug di form post
 // menggunakan library eloquent-sluggable
 const judul = document.querySelector('#judul');
 const slug = document.querySelector('#slug');
