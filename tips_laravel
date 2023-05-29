@@ -307,7 +307,7 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
         Link  halaman kategori admin
     @endcan
 
-# Cara Membuat Slug di Laravel dengan library Slug eloquent-sluggable, 
+# Cara Membuat Slug di Laravel dengan library eloquent-sluggable, 
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
 Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
@@ -322,8 +322,18 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
         $slug = SlugService::createSlug(Berita::class, 'slug', $request->judul);
         return response()->json(['slug' => $slug]);
     }
-
-- Model Post tambahkan use
+  
+- Parameter fungsi pada controller penamaan disesuaikan dengan nama Routelist, contoh :
+ public function show(Berita $beritum)
+    {
+        // parameter Berita disesuaikan dengan parameter route list, maka parameter menjadi ( $beritum )
+        return view('dashboard.berita.show', [
+            'berita' => $beritum
+        ]);
+    }
+    
+    
+- Pada Model Post tambahkan use slugable dan getRoutekeyName dan sloggable
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
