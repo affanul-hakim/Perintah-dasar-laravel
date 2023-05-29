@@ -223,7 +223,10 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
         return back()->with('loginError', 'Login failed');
     }
     
-# Midleware
+                                          -------------------------    
+                                          ### Midleware Default ###
+                                          -------------------------
+
 - Secara default midelware otomatis berjalan dalam laravel, seting midelware berada dalam folder : App/Http/Kernel
 
 - user yang sudah autentifikasi dengan fungsi : Auth
@@ -245,13 +248,18 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
 
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
--------------------------------------------------------------------------------------------
-#### Membuat Middleware Sendiri untuk dijadikan Authirzation, Otorisasi akun admin dan akun user biasa ####
--------------------------------------------------------------------------------------------
-   
-1. Buat Midlleware Sendiri
+      
+                            ---------------------------------------------------    
+                            #### Membuat Middleware dan Autorization ####
+                            ---------------------------------------------------
+
+1. Buat Middleware baru dengan comandpalete VSCode, atau demgan perintah dibawah ini, berikan nama (IsAdmin) 
 php artisan make:midlleware IsAdmin, atau command palete vscode
-- masukan kode berikut pada fungsi handle IsAdmin
+
+ // Otentikasi User Autorization, Otorisasi akun admin dan akun user biasa
+ // Jika user belum login atau User selain admin tidak bisa akses kategori
+
+- masukan kode berikut pada Middleware IsAdmin
 
    // jika belum login dan bukan admin -> forbiden
         if (!auth()->check() || !auth()->user()->is_admin) {
@@ -260,63 +268,42 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
 
         return $next($request);
         
-2. masukan kode pada middleware IsAdmin yang baru dibuat tadi
-
- // Otentikasi User Autorization
- // Jika user belum login atau User selain sandika tidak bisa akses kategori merek motor, buat midlleware baru, dan pindahkan pindah ke middleware script dibawah ini
- 
-    public function handle(Request $request, Closure $next)
-    {
-        // Cara pertama
-        if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
-            abort(403);
-        }
-        return $next($request);
         
-        // Cara Kedua yang disarankan :
-        // Jika user belum login & bukan admin maka tidak bisa akses kontroler middleware is_admin
-        if (auth()->guest() || !auth()->user()->is_admin) {
-            abort(403);
-        }
-        return $next($request);
-    }
----------------------------------------------------    
-#### Cara yang dianjurkan Membuat Autorization ####
----------------------------------------------------
-
-1. Buat Middleware baru dengan comandpalete VSCode berikan nama (IsAdmin) kemudian Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
+2. Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
  'is_admin' => \App\Http\Middleware\IsAdmin::class
  
-2. Tambahkan Middleware is_admin di route kategori merek yang akan kita autorization, dimana hanya admin yang bisa mengaksesnya bukan user biasa
+3. Tambahkan Middleware is_admin di route kategori/merek yang akan kita autorization, dimana hanya admin yang bisa mengaksesnya bukan user biasa
 Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
 
-# Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
-1. Buat gate baru tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
+# Gate untuk membatasi user mengakses halaman/kategori controller tertentu khusus admin
+4. Buat gate baru tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
 
   Gate::define('admin', function (User $user) {
            return $user->is_admin;
       });
   
-2. Buat Migrasi Database Tambahkan kolom is_admin pada tabel users default false apabila belum ada kolom is_admin pada tabel user. 
+5. Buat  Database Migration (add_is_admin_to_user_table) dengan nama kolom baru is_admin pada tabel users, default false apabila belum ada kolom is_admin pada tabel user. 
     
     $table->boolean('is_admin')->default(false);
+    
     $table->dropColumn('is_admin');
     
-3. Ubah koding Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
+3. Daftarkan Autorization Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
       
       Gate::define('admin', function (User $user) {
            return $user->is_admin;
       });
 
-4 Masukan kode ( @can ) Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
+4 Masukan kode ( @can )Autorization Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
     @can('admin')
         Link  halaman kategori admin
     @endcan
 
----------------------------------------------------------------------------
-##### Cara Membuat Slug di Laravel dengan library eloquent-sluggable #####
----------------------------------------------------------------------------
-
+                                                -----------------------------------------
+                                                ##### Cara Membuat Slug di Laravel  #####
+                                                -----------------------------------------
+                                
+- Slug dibuat dengan library eloquent-sluggable
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
 1. Instal librari eloquent sluggabel.
