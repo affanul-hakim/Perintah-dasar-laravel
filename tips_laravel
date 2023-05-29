@@ -245,15 +245,21 @@ Merubah redirect autentikasi di file : App\Providers\RouteServiceProvider
 
 Route::get('/login_wpu', [LoginWpuController::class, 'index'])->name('login')->middleware('guest');
 
-# Authirzation, Otorisasi akun admin dan akun user biasa
-- Tambahkan pada controller kategori admin
-  if (auth()->guest() || auth()->user()->email !== 'sandika@gmail.com') {
-        abort(403);
-   }   
+-------------------------------------------------------------------------------------------
+#### Membuat Middleware Sendiri untuk dijadikan Authirzation, Otorisasi akun admin dan akun user biasa ####
+-------------------------------------------------------------------------------------------
    
 1. Buat Midlleware Sendiri
 php artisan make:midlleware IsAdmin, atau command palete vscode
+- masukan kode berikut pada fungsi handle IsAdmin
 
+   // jika belum login dan bukan admin -> forbiden
+        if (!auth()->check() || !auth()->user()->is_admin) {
+            abort(403);
+        }
+
+        return $next($request);
+        
 2. masukan kode pada middleware IsAdmin yang baru dibuat tadi
 
  // Otentikasi User Autorization
@@ -267,20 +273,21 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
         }
         return $next($request);
         
-        // Cara Kedua yang kita gunakan :
+        // Cara Kedua yang disarankan :
         // Jika user belum login & bukan admin maka tidak bisa akses kontroler middleware is_admin
         if (auth()->guest() || !auth()->user()->is_admin) {
             abort(403);
         }
         return $next($request);
     }
-    
+---------------------------------------------------    
 #### Cara yang dianjurkan Membuat Autorization ####
+---------------------------------------------------
 
-1. Buat Middleware baru, Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
+1. Buat Middleware baru dengan comandpalete VSCode berikan nama (is_admin) kemudian Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
  'is_admin' => \App\Http\Middleware\IsAdmin::class
  
-2. Tambahkan Middleware is_admin di route kategori merek yang akan kita autorization, hanya admin yang bisa mengaksesnya
+2. Tambahkan Middleware is_admin di route kategori merek yang akan kita autorization, dimana hanya admin yang bisa mengaksesnya bukan user biasa
 Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
 
 # Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
