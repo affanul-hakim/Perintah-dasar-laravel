@@ -286,13 +286,13 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
     
     $table->dropColumn('is_admin');
     
-3. Daftarkan Autorization Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
+6. Daftarkan Autorization Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
       
       Gate::define('admin', function (User $user) {
            return $user->is_admin;
       });
 
-4 Masukan kode ( @can )Autorization Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
+7 Masukan kode ( @can )Autorization Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
     @can('admin')
         Link  halaman kategori admin
     @endcan
