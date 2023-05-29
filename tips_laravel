@@ -267,7 +267,7 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
         }
         return $next($request);
         
-        // Cara Kedua    
+        // Cara Kedua yang kita gunakan :
         // Jika user belum login & bukan admin maka tidak bisa akses kontroler middleware is_admin
         if (auth()->guest() || !auth()->user()->is_admin) {
             abort(403);
@@ -275,53 +275,54 @@ php artisan make:midlleware IsAdmin, atau command palete vscode
         return $next($request);
     }
     
-# Cara yang dianjurkan Membuat Autorization :
+#### Cara yang dianjurkan Membuat Autorization ####
 
-3. Buat Middleware baru, Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
+1. Buat Middleware baru, Daftarkan di Kernel Middleware yang kita buat App\Http\Kernel.
  'is_admin' => \App\Http\Middleware\IsAdmin::class
  
-4. Tambahkan Middleware is_admin di route kategori merek
+2. Tambahkan Middleware is_admin di route kategori merek yang akan kita autorization, hanya admin yang bisa mengaksesnya
 Route::resource('/merek', MerekController::class)->except('show')->middleware('is_admin');
 
 # Gate untuk membatasi user mengakses halaman/kategori  tertentu khusus admin
 1. Buat gate baru tambahkan skrip berikut di file App\Providers\AppServiceProvider.php didalam fungsi boot
-  1 Hanya email : sandika@gmail.com yang bisa mengakses kategori contoh pertama :
+  - Hanya email : sandika@gmail.com yang bisa mengakses kategori contoh pertama :
   
   Gate::define('admin', function (User $user) {
        return $user->email === 'sandika@gmail.com';
   });
   
-- Buat Migrasi Tambahkan kolom is_admin pada tabel users default false apabila belum ada kolom is_admin pada tabel user. 
+2. Buat Migrasi Database Tambahkan kolom is_admin pada tabel users default false apabila belum ada kolom is_admin pada tabel user. 
     
     $table->boolean('is_admin')->default(false);
     $table->dropColumn('is_admin');
     
-2 Ubah koding Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
+3. Ubah koding Gate pada file App\Providers\AppServiceProvider.php menjadi contoh berikut merubah dari koding gate sebelumnya :
       
       Gate::define('admin', function (User $user) {
            return $user->is_admin;
       });
 
-- Masukan Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
+4 Masukan kode ( @can ) Gate pada view Blade, maka halaman kategori akan hilang dan tidak bisa diakses kecuali user admin 
     @can('admin')
         Link  halaman kategori admin
     @endcan
 
-# Cara Membuat Slug di Laravel dengan library eloquent-sluggable, 
+##### Cara Membuat Slug di Laravel dengan library eloquent-sluggable #####
+
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
-Instal librari eloquent sluggabel.
+1. Instal librari eloquent sluggabel.
 Buat Controller resource baru dengan dengan comandpalete VScode
 - atau ketikan perintah membuat controller resource :
 php artisan make:controller BeritaController --model=Berita --resource --requests
 
-Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
+2. Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
 // Route, Request slug berita
 Route::get('/dashboard/berita/checkSlug', [BeritaController::class, 'checkSlug'])->middleware('auth');
 //Route resource berita
 Route::resource('/dashboard/berita', DashboardBeritaController::class)->middleware('auth');
 
-- Controller Berita, tambahkan namespace :
+3. Controller Berita, tambahkan namespace :
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 - Parameter fungsi pada controller penamaannya disesuaikan dengan nama Routelist, contoh :
@@ -333,16 +334,15 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
         ]);
     }
     
-- Masukan fungsi checkslug :
+4. Masukan fungsi checkslug :
    public function checkSlug(Request $request)
     {
         $slug = SlugService::createSlug(Berita::class, 'slug', $request->judul);
         return response()->json(['slug' => $slug]);
-    }
+    } 
   
     
-    
-- Pada Model Berita tambahkan use slugable dan getRoutekeyName dan sluggable
+5. Pada Model Berita tambahkan use slugable dan getRoutekeyName dan sluggable
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -362,7 +362,7 @@ use Sluggable;
         ];
     }
 
-- Form View Create Berita, masukan kode Javascript untuk membuat slug di form post, dengan nama id field judul dan slug :
+6. Form View Create Berita, masukan kode Javascript untuk membuat slug di form post, dengan nama id field judul dan slug :
 // menggunakan library eloquent-sluggable
 const judul = document.querySelector('#judul');
 const slug = document.querySelector('#slug');
