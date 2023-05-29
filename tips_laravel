@@ -313,7 +313,9 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
         Link  halaman kategori admin
     @endcan
 
+---------------------------------------------------------------------------
 ##### Cara Membuat Slug di Laravel dengan library eloquent-sluggable #####
+---------------------------------------------------------------------------
 
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
