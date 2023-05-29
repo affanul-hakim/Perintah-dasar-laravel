@@ -1,9 +1,8 @@
 # Tips Urutan Pembuatan MVC pada Laravel :
 php artisan help (migrate:status) bantuan 
 
-
 # Model 	
-php artisan make:model -m Flight  (membuat model dan migrasi)
+php artisan make:model -m Flight  (membuat model dan migration)
 
 # Migration 
 php artisan make:migration create_flights_table	 (membuat file migrasi baru)
@@ -18,7 +17,6 @@ php artisan make:controller -r MotorController (membuat controller dan resource 
 
 - Membuat  Controller yang terhubung dengan model (Spesifik resource model) agar bisa menggunakan slug tanpa id
 php artisan make:controller PhotoController --model=Photo --resource
-
 
 
 # Seeder
@@ -63,7 +61,7 @@ FAKER_LOCALE=id_ID
 # Faker Doc (dokumentasi Faker)
 https://fakerphp.github.io/
 
-# Tinker
+# Cara menjalankan Tinker
 php artisan tinker
 $user = new App\Models\User;
 $user = new User;
@@ -171,11 +169,11 @@ return redirect('/login_wpu')->with('success_message', 'Registration successfull
 
 - menampilkan flash data dengan bootstrap
 
-   @if (session()->has('success_message'))        
-      <div class="alert alert-success">
-           {{ session('success_message) }}
-      </div>
-    @endif
+  @if (session()->has('success'))
+  <div class="alert alert-success col-lg-8 text-center" role="alert">
+    <span data-feather="check" class="align-text-bottom"></span> {{ session('success') }}
+  </div>      
+  @endif
 
 # Validasi Data : key Validation, pada form registrasi user
 
