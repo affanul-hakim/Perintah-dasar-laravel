@@ -310,20 +310,21 @@ Route::resource('/merek', MerekController::class)->except('show')->middleware('i
 # Cara Membuat Slug di Laravel dengan library eloquent-sluggable, 
 - Dokumentasi : https://github.com/cviebrock/eloquent-sluggable#eloquent-sluggable
 
+Instal librari eloquent sluggabel.
+Buat Controller resource baru dengan dengan comandpalete VScode
+- atau ketikan perintah membuat controller resource :
+php artisan make:controller BeritaController --model=Berita --resource --requests
+
 Tambah Route diatas route berita, untuk mengirim ke fungsi checkSlug ke controller berita :
 // Route, Request slug berita
 Route::get('/dashboard/berita/checkSlug', [BeritaController::class, 'checkSlug'])->middleware('auth');
+//Route resource berita
+Route::resource('/dashboard/berita', DashboardBeritaController::class)->middleware('auth');
 
-- Controller Post, tambahkan use 
+- Controller Berita, tambahkan namespace :
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
-   public function checkSlug(Request $request)
-    {
-        $slug = SlugService::createSlug(Berita::class, 'slug', $request->judul);
-        return response()->json(['slug' => $slug]);
-    }
-  
-- Parameter fungsi pada controller penamaan disesuaikan dengan nama Routelist, contoh :
+- Parameter fungsi pada controller penamaannya disesuaikan dengan nama Routelist, contoh :
  public function show(Berita $beritum)
     {
         // parameter Berita disesuaikan dengan parameter route list, maka parameter menjadi ( $beritum )
@@ -332,8 +333,16 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
         ]);
     }
     
+- Masukan fungsi checkslug :
+   public function checkSlug(Request $request)
+    {
+        $slug = SlugService::createSlug(Berita::class, 'slug', $request->judul);
+        return response()->json(['slug' => $slug]);
+    }
+  
     
-- Pada Model Post tambahkan use slugable dan getRoutekeyName dan sloggable
+    
+- Pada Model Berita tambahkan use slugable dan getRoutekeyName dan sluggable
 
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -353,7 +362,7 @@ use Sluggable;
         ];
     }
 
-- Form View Create Post, Javascript untuk membuat slug di form post, dengan nama id field judul dan slug, dengan koding javascript sebagai berikut :
+- Form View Create Berita, masukan kode Javascript untuk membuat slug di form post, dengan nama id field judul dan slug :
 // menggunakan library eloquent-sluggable
 const judul = document.querySelector('#judul');
 const slug = document.querySelector('#slug');
