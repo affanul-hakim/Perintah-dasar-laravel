@@ -382,10 +382,10 @@ Create :
         @enderror
       </div>
       
-      
+
+// Script image preview Javascript
 <script>
 
-// Script image preview
 function previewImage() {
   const image = document.querySelector('#image');
   const imgPreview = document.querySelector('.img-preview');
