@@ -369,6 +369,8 @@ fetch('/dashboard/berita/checkSlug?judul=' + judul.value)
 
 ## Image Preview Javascript ##
 
+Create :
+
 <div class="mb-3">
         <label for="image" class="form-label">Image</label>
         <img class="img-preview img-fluid mb-3 col-sm-5">
@@ -400,7 +402,14 @@ function previewImage() {
 
 </script>
 
+Form Edit :
+preview Image :
 
+      @if($pegawai->image)
+        <img src="{{ asset('storage/' . $pegawai->image) }}" class="img-preview img-fluid mb-3 col-sm-5 d-block">
+        @else
+        <img class="img-preview img-fluid mb-3 col-sm-5">
+      @endif
 
 
 
