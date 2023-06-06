@@ -413,6 +413,17 @@ preview Image :
 
 
 
+# Upload File/Foto #
+Dokumentasi : https://laravel.com/docs/9.x/filesystem#the-local-driver
+
+.env
+FILESYSTEM_DISK=public
+
+- menghubungkan file app public dengan file public
+php artisan storage:link
+
+- Untuk akses 
+echo asset('storage/file.txt');
 
 
 
