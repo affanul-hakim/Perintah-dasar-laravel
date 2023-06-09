@@ -416,10 +416,10 @@ preview Image :
 # Upload File/Foto #
 Dokumentasi : https://laravel.com/docs/9.x/filesystem#the-local-driver
 
-.env
+.env laravel 9
 FILESYSTEM_DISK=public
 
-- menghubungkan file app public dengan file public
+- menghubungkan file app public dengan file public, gunakan perintah 
 php artisan storage:link
 
 - Untuk akses image gunakan printah asset()
