@@ -422,8 +422,18 @@ FILESYSTEM_DISK=public
 - menghubungkan file app public dengan file public
 php artisan storage:link
 
-- Untuk akses 
-echo asset('storage/file.txt');
+- Untuk akses image gunakan printah asset()
+- echo asset('storage/file.txt');
+
+   @if($post->image)
+    <div style="max-height: 350px; overflow:hidden">
+        <img src="{{ asset('storage/' . $post->image) }}" alt="" class="img-fluid mt-3">
+        <article class="my-3 fs-5">
+    </div>
+     @else 
+         <img src="https://picsum.photos/700/400" alt="" class="img-fluid mt-3">
+         <article class="my-3 fs-5">
+     @endif
 
 
 
