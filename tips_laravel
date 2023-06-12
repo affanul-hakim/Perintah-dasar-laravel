@@ -79,10 +79,13 @@ $user->findOrfail(10) (dengan pesan kesalahan)
 Menampilkan data berdasar kategory :
 Blog::where('category_id', 1)->get()
 
-Menampilkan data pertama dari blog :
+- Menampilkan data pertama dari blog :
 $blog = Blog::first()
 
-Menampilkan data blog yang sudah terhubung dengan category
+- Menampilkan data pertama dari Category :
+$category = Category::first()
+
+- Menampilkan data blog yang sudah terhubung dengan category
 $blog->category
 
 - Menampilkan data Category yang sudah terhubung dengan blog
