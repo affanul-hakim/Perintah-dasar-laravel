@@ -76,6 +76,16 @@ $user->first()
 $user->find(1)
 $user->findOrfail(10) (dengan pesan kesalahan)
 
+Menampilkan data berdasar kategory :
+Blog::where('category_id', 1)->get()
+
+Menampilkan data pertama dari blog :
+$blog = Blog::first()
+
+Menampilkan data blog yang sudah terhubung dengan category
+$blog->category
+
+
 - Input data melalui Tinker, berikut template :
 
 Category::create([
@@ -84,6 +94,7 @@ Category::create([
 ])
 - Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
 
+- Cara cek lewat tinker apakah tabel sudah terhubung/berelasi belongsTo / hasMany
 
 
 # Paginate 
