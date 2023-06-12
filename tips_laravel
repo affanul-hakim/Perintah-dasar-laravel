@@ -91,17 +91,17 @@ $blog->category
 - Menampilkan data Category yang sudah terhubung dengan blog
 $category->blog
 
-
-- Input data melalui Tinker, berikut template :
+- Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
+- Input data melalui Tinker, buat template :
 
 Category::create([
     'name' => 'Personal',
     'slug' => 'personal'
 ])
-- Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
+
+- Input data kedalam tabel categori dengan name dan slug :
 
 - Cara cek lewat tinker apakah tabel sudah terhubung/berelasi belongsTo / hasMany
-
 
 # Paginate 
  untuk mengaktifkan link paginate tambahkan  (laravel 9)
