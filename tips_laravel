@@ -85,10 +85,10 @@ $blog = Blog::first()
 - Menampilkan data pertama dari Category :
 $category = Category::first()
 
-- Menampilkan data blog yang sudah terhubung dengan category
+- Menampilkan data blog apakah sudah terhubung dengan category
 $blog->category
 
-- Menampilkan data Category yang sudah terhubung dengan blog
+- Menampilkan data Category apakah sudah terhubung dengan blog
 $category->blog
 
 - Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
