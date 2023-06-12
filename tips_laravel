@@ -76,6 +76,16 @@ $user->first()
 $user->find(1)
 $user->findOrfail(10) (dengan pesan kesalahan)
 
+- Input data melalui Tinker, buat contekan,
+
+Category::create([
+    'name' => 'Personal',
+    'slug' => 'personal'
+])
+- Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
+
+
+
 # Paginate 
  untuk mengaktifkan link paginate tambahkan  (laravel 9)
 Use bootstrap
