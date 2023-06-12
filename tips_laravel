@@ -76,7 +76,7 @@ $user->first()
 $user->find(1)
 $user->findOrfail(10) (dengan pesan kesalahan)
 
-- Input data melalui Tinker, buat contekan,
+- Input data melalui Tinker, berikut template :
 
 Category::create([
     'name' => 'Personal',
