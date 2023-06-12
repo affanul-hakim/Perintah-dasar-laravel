@@ -85,6 +85,9 @@ $blog = Blog::first()
 Menampilkan data blog yang sudah terhubung dengan category
 $blog->category
 
+- Menampilkan data Category yang sudah terhubung dengan blog
+$category->blog
+
 
 - Input data melalui Tinker, berikut template :
 
