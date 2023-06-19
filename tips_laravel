@@ -18,6 +18,15 @@ php artisan make:controller -r MotorController (membuat controller dan resource 
 - Membuat  Controller yang terhubung dengan model (Spesifik resource model) agar bisa menggunakan slug tanpa id
 php artisan make:controller PhotoController --model=Photo --resource
 
+# Instal Paket Laravel dengan Composer :
+- composer require laravel/breeze:1.9.2
+
+# Menghapus Paket Laravel di Composer : 
+1. composer remove laravel/breeze:1.9.2
+2. composer update
+3. php artisan cache:clear
+4. php artisan config:clear
+
 
 # Seeder
 php artisan make:seeder UserSeeder   (membuat seeder)
