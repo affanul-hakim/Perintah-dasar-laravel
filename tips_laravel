@@ -1,24 +1,24 @@
 # Tips Urutan Pembuatan MVC pada Laravel :
 php artisan help (migrate:status) bantuan 
 
-# Model 	
+### Model ###	
 php artisan make:model -m Flight  (membuat model dan migration)
 
-# Migration 
+### Migration ###
 php artisan make:migration create_flights_table	 (membuat file migrasi baru)
 php artisan migrate (menjalankan migrasi)
 php artisan migrate:status (status migrasi)
 php artisan migrate:rollback (mengembalikan migrasi satu tingkat)
 php artisan migrate:fresh (menghapus migrate dan menjalankan kembali file migrate)
 
-# Controller 
+### Controller ##
 php artisan make:controller PhotoController (membuat controller)
 php artisan make:controller -r MotorController (membuat controller dan resource controler)
 
 - Membuat  Controller yang terhubung dengan model (Spesifik resource model) agar bisa menggunakan slug tanpa id
 php artisan make:controller PhotoController --model=Photo --resource
 
-# Instal Paket Laravel dengan Composer :
+### Instal Paket Laravel dengan Composer :###
 - composer require laravel/breeze:1.9.2
 
 # Menghapus Paket Laravel di Composer : 
@@ -27,8 +27,8 @@ php artisan make:controller PhotoController --model=Photo --resource
 3. php artisan cache:clear
 4. php artisan config:clear
 
+### Seeder ###
 
-# Seeder
 php artisan make:seeder UserSeeder   (membuat seeder)
 php artisan db:seed  (menjalankan seeder)
 
@@ -70,13 +70,16 @@ FAKER_LOCALE=id_ID
 # Faker Doc (dokumentasi Faker)
 https://fakerphp.github.io/
 
-# Cara menjalankan Tinker
+###   Tinker  ###
+
 php artisan tinker
-$user = new App\Models\User;
+use App\Models\User (User sesuaikan nama model yang akan digunakan)
+
 $user = new User;
 $user->name = 'Affanul hakim'
 $user->email = 'affanul@gmail.com'
 $user->password = bcrypt('coba)
+- menyimpan data
 $user->save()
 
 - Menampilkan data di tinker
@@ -101,18 +104,21 @@ $blog->category
 $category->blog
 
 - Masuk ke Tinker, copy dan paste skrip diatas untuk input data ke table Category melalui tinker
-- Input data melalui Tinker, buat template :
 
-Category::create([
-    'name' => 'Personal',
-    'slug' => 'personal'
+- Input database menggunakan tinker, template :
+Post::create([
+    'title' => 'Personal',
+    'slug' => 'personal',
+    'excerpt' => 'data excerpt ..',
+    'body' => 'data body...'
 ])
 
-- Input data kedalam tabel categori dengan name dan slug :
+- Update data di tinker berdasa judul
+Post::find(3)->update(['title' => 'judul post ketiga edit'])
 
-- Cara cek lewat tinker apakah tabel sudah terhubung/berelasi belongsTo / hasMany
 
-# Paginate 
+#### Paginate  ####
+
  untuk mengaktifkan link paginate tambahkan  (laravel 9)
 Use bootstrap
 App\Providers\AppServiceProvider
@@ -122,7 +128,7 @@ public function boot()
  
 } 
 
-# Relationship
+### Relationship ###
 
 - one to one  
 class Post extends Model
@@ -151,13 +157,13 @@ class Post extends Model
 - Menampilkan berdasar kategori
  -  {{ $post->category->nama }}
 
-# Problem N + 1
+### Problem N + 1 ###
 Install Library : https://github.com/itsgoingd/clockwork
 Install extention chome : clockwork
 
 Untuk melihat di browser chorme, klik kanan di halaman + inspect + clockwork
 
-# Dokumentasi Larevel 
+### Dokumentasi Larevel ##
 # Eager Loading
 
 - Tambahkan fungsi with untuk mengatasi N+1 problem
@@ -192,12 +198,12 @@ if ($someCondition) {
 }
 
 
-# View Blade 
+### View Blade ###
 - Navbar
 Operator ternari, apabila variabel title berisi home maka tampilkan active pada navbar :
 {{ ($title === "home") ? 'active' : '' }} 
 
-# Flash data, key Flash Data
+# Flash data, key Flash Data ##
 
 - Membuat redirect halaman login, sekaligus menampilkan flash data
 
