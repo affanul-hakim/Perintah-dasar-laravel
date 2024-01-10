@@ -73,7 +73,7 @@ https://fakerphp.github.io/
 ###   Tinker  ###
 
 php artisan tinker
-use App\Models\User (User sesuaikan nama model yang akan digunakan)
+use App\Models\User (User sesuaikan nama model yang akan digunakan) // gunakan setiap akan menggunakan model
 
 $user = new User;
 $user->name = 'Affanul hakim'
@@ -91,8 +91,12 @@ $user->findOrfail(10) (dengan pesan kesalahan)
 Menampilkan data berdasar kategory :
 Blog::where('category_id', 1)->get()
 
-- Menampilkan data pertama dari blog :
-$blog = Blog::first()
+- Menampilkan data category
+> use App\Models\Post
+> $post = Post::first() // menampilkan data pertama post
+$post->category   // menampilkan berdasar kategori
+$post->category->name     // menampilkan nama kategori
+
 
 - Menampilkan data pertama dari Category :
 $category = Category::first()
