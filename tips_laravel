@@ -75,6 +75,12 @@ https://fakerphp.github.io/
 php artisan tinker
 use App\Models\User (User sesuaikan nama model yang akan digunakan) // gunakan setiap akan menggunakan model
 
+$post = new App\Models\Post;
+apabila tidak jalan maka ketikan perintah: composer dump-autoload
+$post->title = 'Judul pertama'
+...
+$post->save()
+
 $user = new User;
 $user->name = 'Affanul hakim'
 $user->email = 'affanul@gmail.com'
